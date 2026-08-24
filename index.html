@@ -4,17 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>15 Jahre Jubiläum - Glücksrad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #c59b27;
-      --primary-hover: #a37f1e;
-      --bg-color: #fdf8f5;
+      --primary-color: #3b8b8a;
+      --primary-hover: #2d6b6a;
+      --bg-color: #f5f9f8;
       --card-bg: #ffffff;
-      --text-color: #4a4a4a;
+      --text-color: #384848;
+      --accent-color: #5bb3b1;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       display: flex;
@@ -25,40 +29,73 @@
       margin: 0;
       padding: 20px;
       box-sizing: border-box;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Logo oben rechts mit Transparenz */
+    .top-right-logo {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      max-width: 130px;
+      max-height: 85px;
+      height: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
     }
 
     .header-container {
       text-align: center;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      margin-top: 20px;
     }
 
-    .logo {
-      max-width: 180px;
-      max-height: 100px;
-      height: auto;
-      margin-bottom: 10px;
-      object-fit: contain;
-    }
-
+    /* Firmenname im Stil des Logos */
     .company-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: 1.5px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: #777;
-      margin: 0 0 5px 0;
+      color: #3b8b8a;
+      margin: 0 0 4px 0;
+      line-height: 1.2;
+    }
+
+    .company-name span.bold-title {
+      font-weight: 700;
+      letter-spacing: 6px;
+      display: block;
+      font-size: 1.4rem;
+      color: #2b6c6b;
+      margin-top: 2px;
+    }
+
+    .subtitle-prefix {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #7a9e9d;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
     }
 
     h1 {
-      margin: 0 0 8px 0;
+      margin: 12px 0 6px 0;
       color: var(--primary-color);
-      font-size: 2rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 600;
     }
 
     p.subtitle {
       margin: 0;
-      font-size: 1.05rem;
-      color: #666;
+      font-size: 1rem;
+      color: #556665;
+      font-weight: 400;
     }
 
     .wheel-outer-wrapper {
@@ -85,29 +122,30 @@
 
     canvas {
       border-radius: 50%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-      max-width: 100%;
-      height: auto;
+      box-shadow: 0 10px 25px rgba(59, 139, 138, 0.15);
+      width: 360px;
+      height: 360px;
     }
 
     .spin-btn {
       margin-top: 15px;
       padding: 16px 48px;
-      font-size: 1.25rem;
-      font-weight: bold;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 1px;
       background-color: var(--primary-color);
       color: white;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(197, 155, 39, 0.4);
+      box-shadow: 0 4px 15px rgba(59, 139, 138, 0.4);
       transition: all 0.2s ease;
     }
 
     .spin-btn:hover {
       background-color: var(--primary-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(197, 155, 39, 0.5);
+      box-shadow: 0 6px 20px rgba(59, 139, 138, 0.5);
     }
 
     .spin-btn:disabled {
@@ -148,6 +186,7 @@
     .modal-content h2 {
       color: var(--primary-color);
       margin-top: 0;
+      font-family: 'Playfair Display', Georgia, serif;
     }
 
     .winner-text {
@@ -160,7 +199,7 @@
 
     .btn-close {
       padding: 12px 30px;
-      background: #4a4a4a;
+      background: #384848;
       color: white;
       border: none;
       border-radius: 8px;
@@ -168,7 +207,7 @@
       cursor: pointer;
     }
 
-    /* Admin Button & Panel */
+    /* Admin Panel */
     .admin-toggle {
       position: fixed;
       bottom: 15px;
@@ -218,23 +257,42 @@
       border-radius: 6px;
       cursor: pointer;
     }
+
+    @media (max-width: 600px) {
+      .top-right-logo {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 10px;
+      }
+      .company-name {
+        letter-spacing: 3px;
+        font-size: 1.1rem;
+      }
+      .company-name span.bold-title {
+        letter-spacing: 4px;
+        font-size: 1.2rem;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Logo Oben Rechts -->
+  <img src="logo.png" alt="HAUPTSACHE SCHÖN Logo" class="top-right-logo" onerror="this.style.display='none'">
+
   <div class="header-container">
-    <img src="logo.png" alt="Firmenlogo" class="logo" onerror="this.style.display='none'">
-    
-    <!-- Ihr Firmenname -->
-    <p class="company-name">Kosmetikstudio Hau(p)tsache Schön</p>
-    
+    <span class="subtitle-prefix">Kosmetikstudio</span>
+    <div class="company-name">
+      HAU(P)TSACHE SCHÖN
+    </div>
     <h1>✨ 15 Jahre Jubiläum ✨</h1>
     <p class="subtitle">Drehen Sie am Glücksrad & gewinnen Sie tolle Preise!</p>
   </div>
 
   <div class="wheel-outer-wrapper">
     <div class="pointer"></div>
-    <canvas id="wheel" width="360" height="360"></canvas>
+    <canvas id="wheel"></canvas>
   </div>
 
   <button id="spinBtn" class="spin-btn" onclick="spin()">Jetzt Drehen!</button>
@@ -258,6 +316,7 @@
   </div>
 
   <script>
+    // SHA-256 Hash der PIN "1515"
     const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
 
     async function sha256(str) {
@@ -296,10 +355,21 @@
     let prizes = [];
     let prizeDeck = [];
 
-    const colors = ["#f8edeb", "#fcd5ce", "#fec5bb", "#fae1dd", "#ece4db", "#ffe5ec", "#e8e8e8"];
+    // Farben angepasst an Marken-Design
+    const colors = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
+    const textColors = ["#ffffff", "#224443", "#ffffff", "#384848", "#ffffff", "#224443"];
+
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
-    const radius = canvas.width / 2;
+
+    // HDPI Canvas-Skalierung für gestochen scharfe Darstellung (Retina / High-DPI Displays)
+    const baseSize = 360;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = baseSize * dpr;
+    canvas.height = baseSize * dpr;
+    ctx.scale(dpr, dpr);
+
+    const radius = baseSize / 2;
     let currentAngle = 0;
     let isSpinning = false;
     let selectedPrizeIndex = 0;
@@ -331,7 +401,7 @@
 
     function drawWheel() {
       const arcSize = (2 * Math.PI) / prizes.length;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, baseSize, baseSize);
 
       for (let i = 0; i < prizes.length; i++) {
         const angle = currentAngle + i * arcSize;
@@ -349,8 +419,9 @@
         ctx.translate(radius, radius);
         ctx.rotate(angle + arcSize / 2);
         ctx.textAlign = "right";
-        ctx.fillStyle = "#4a4a4a";
-        ctx.font = "bold 14px sans-serif";
+        ctx.fillStyle = textColors[i % textColors.length];
+        // Knackig scharfe Schrift auf dem Canvas mit Montserrat Font
+        ctx.font = "600 14px 'Montserrat', sans-serif";
         ctx.fillText(prizes[i], radius - 20, 5);
         ctx.restore();
       }
@@ -379,7 +450,7 @@
 
       const duration = 4500;
       const startAngle = currentAngle;
-      const start.performance.now ? start = performance.now() : start = Date.now();
+      const start = performance.now();
 
       function animate(time) {
         const elapsed = time - start;
@@ -430,7 +501,6 @@
       }
     }
 
-    // Erst die PIN-Authentifizierung ausführen, bevor das Spiel geladen wird
     verifyAccess().then(() => {
       initPrizes();
     });
