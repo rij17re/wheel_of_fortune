@@ -29,24 +29,41 @@
 
     .header-container {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      max-width: 180px;
+      max-height: 100px;
+      height: auto;
+      margin-bottom: 10px;
+      object-fit: contain;
+    }
+
+    .company-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #777;
+      margin: 0 0 5px 0;
     }
 
     h1 {
       margin: 0 0 8px 0;
       color: var(--primary-color);
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
 
     p.subtitle {
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #666;
     }
 
     .wheel-outer-wrapper {
       position: relative;
-      margin: 20px 0;
+      margin: 15px 0;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -74,7 +91,7 @@
     }
 
     .spin-btn {
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 16px 48px;
       font-size: 1.25rem;
       font-weight: bold;
@@ -206,7 +223,12 @@
 <body>
 
   <div class="header-container">
-    <h1>✨ 15 Jahre Kosmetikstudio ✨</h1>
+    <img src="logo.png" alt="Firmenlogo" class="logo" onerror="this.style.display='none'">
+    
+    <!-- Ihr Firmenname -->
+    <p class="company-name">Kosmetikstudio Hau(p)tsache Schön</p>
+    
+    <h1>✨ 15 Jahre Jubiläum ✨</h1>
     <p class="subtitle">Drehen Sie am Glücksrad & gewinnen Sie tolle Preise!</p>
   </div>
 
@@ -236,16 +258,13 @@
   </div>
 
   <script>
-    // SHA-256 Hash der PIN "1515"
     const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
 
-    // SHA-256 Funktion zur Verschlüsselung der Benutzereingabe
     async function sha256(str) {
       const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // Seiten-Zugriffsschutz (Prüft den Hash direkt beim Aufrufen der Seite)
     async function verifyAccess() {
       const inputPin = prompt("Bitte PIN eingeben, um das Glücksrad zu starten:");
       if (!inputPin) {
@@ -360,7 +379,7 @@
 
       const duration = 4500;
       const startAngle = currentAngle;
-      const start = performance.now();
+      const start.performance.now ? start = performance.now() : start = Date.now();
 
       function animate(time) {
         const elapsed = time - start;
