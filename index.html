@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 Jahre Jubiläum - Glücksrad</title>
+  <style>
+    :root {
+      --primary-color: #c59b27;
+      --primary-hover: #a37f1e;
+      --bg-color: #fdf8f5;
+      --card-bg: #ffffff;
+      --text-color: #4a4a4a;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .header-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      color: var(--primary-color);
+      font-size: 2.2rem;
+    }
+
+    p.subtitle {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .wheel-outer-wrapper {
+      position: relative;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 30px solid #d9534f;
+      z-index: 10;
+      filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.2));
+    }
+
+    canvas {
+      border-radius: 50%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      max-width: 100%;
+      height: auto;
+    }
+
+    .spin-btn {
+      margin-top: 20px;
+      padding: 16px 48px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(197, 155, 39, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .spin-btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(197, 155, 39, 0.5);
+    }
+
+    .spin-btn:disabled {
+      background-color: #cccccc;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 35px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 85%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: popIn 0.3s ease-out;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    .winner-text {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #333;
+      white-space: pre-line;
+    }
+
+    .btn-close {
+      padding: 12px 30px;
+      background: #4a4a4a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* Admin Button & Panel */
+    .admin-toggle {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      opacity: 0.4;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .admin-toggle:hover {
+      opacity: 1;
+    }
+
+    .admin-panel {
+      display: none;
+      position: fixed;
+      bottom: 60px;
+      right: 15px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      width: 280px;
+      z-index: 90;
+    }
+
+    .admin-panel h3 { margin-top: 0; font-size: 1.1rem; color: #333; }
+    .admin-panel textarea {
+      width: 100%;
+      height: 80px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .admin-panel button {
+      width: 100%;
+      padding: 8px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-container">
+    <h1>✨ 15 Jahre Kosmetikstudio ✨</h1>
+    <p class="subtitle">Drehen Sie am Glücksrad & gewinnen Sie tolle Preise!</p>
+  </div>
+
+  <div class="wheel-outer-wrapper">
+    <div class="pointer"></div>
+    <canvas id="wheel" width="360" height="360"></canvas>
+  </div>
+
+  <button id="spinBtn" class="spin-btn" onclick="spin()">Jetzt Drehen!</button>
+
+  <!-- Gewinn Modal -->
+  <div id="resultModal" class="modal">
+    <div class="modal-content">
+      <h2>Herzlichen Glückwunsch! 🎉</h2>
+      <div id="winnerMessage" class="winner-text"></div>
+      <button class="btn-close" onclick="closeModal()">Super!</button>
+    </div>
+  </div>
+
+  <!-- Einstellungen / Admin -->
+  <button class="admin-toggle" onclick="toggleAdmin()" title="Gewinne bearbeiten">⚙️</button>
+  <div id="adminPanel" class="admin-panel">
+    <h3>Gewinne anpassen</h3>
+    <p style="font-size:0.8rem; color:#666; margin-top:-5px;">Trenne mehrere Preise mit Komma:</p>
+    <textarea id="prizesInput"></textarea>
+    <button onclick="savePrizes()">Speichern & Neu starten</button>
+  </div>
+
+  <script>
+    // SHA-256 Hash der PIN "1515"
+    const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
+
+    // SHA-256 Funktion zur Verschlüsselung der Benutzereingabe
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Seiten-Zugriffsschutz (Prüft den Hash direkt beim Aufrufen der Seite)
+    async function verifyAccess() {
+      const inputPin = prompt("Bitte PIN eingeben, um das Glücksrad zu starten:");
+      if (!inputPin) {
+        denyAccess();
+        return;
+      }
+      
+      const hashedInput = await sha256(inputPin);
+      if (hashedInput !== PAGE_PIN_HASH) {
+        alert("Falsche PIN!");
+        denyAccess();
+      }
+    }
+
+    function denyAccess() {
+      document.body.innerHTML = "<div style='text-align:center; padding: 50px;'><h2>Zugriff verweigert</h2><p>Bitte Seite neu laden und richtige PIN eingeben.</p></div>";
+      throw new Error("Zugriff verweigert");
+    }
+
+    let defaultPrizes = [
+      "10% Rabatt",
+      "Gratis Probe",
+      "Gutschein 15€",
+      "Handcreme",
+      "Gratis Maske",
+      "Trostpreis"
+    ];
+
+    let prizes = [];
+    let prizeDeck = [];
+
+    const colors = ["#f8edeb", "#fcd5ce", "#fec5bb", "#fae1dd", "#ece4db", "#ffe5ec", "#e8e8e8"];
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const radius = canvas.width / 2;
+    let currentAngle = 0;
+    let isSpinning = false;
+    let selectedPrizeIndex = 0;
+
+    function initPrizes() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlPrizes = urlParams.get('prizes');
+
+      if (urlPrizes) {
+        prizes = urlPrizes.split(',').map(p => decodeURIComponent(p.trim())).filter(p => p.length > 0);
+      } else {
+        const storedPrizes = localStorage.getItem('studio_prizes');
+        if (storedPrizes) {
+          prizes = JSON.parse(storedPrizes);
+        } else {
+          prizes = [...defaultPrizes];
+        }
+      }
+
+      document.getElementById('prizesInput').value = prizes.join(', ');
+      refillDeck();
+      drawWheel();
+    }
+
+    function refillDeck() {
+      prizeDeck = [...prizes];
+      prizeDeck.sort(() => Math.random() - 0.5);
+    }
+
+    function drawWheel() {
+      const arcSize = (2 * Math.PI) / prizes.length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < prizes.length; i++) {
+        const angle = currentAngle + i * arcSize;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius, angle, angle + arcSize);
+        ctx.lineTo(radius, radius);
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(angle + arcSize / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#4a4a4a";
+        ctx.font = "bold 14px sans-serif";
+        ctx.fillText(prizes[i], radius - 20, 5);
+        ctx.restore();
+      }
+    }
+
+    function spin() {
+      if (isSpinning) return;
+
+      if (prizeDeck.length === 0) {
+        refillDeck();
+      }
+
+      const winningPrize = prizeDeck.pop();
+      selectedPrizeIndex = prizes.indexOf(winningPrize);
+
+      isSpinning = true;
+      document.getElementById("spinBtn").disabled = true;
+
+      const arcSize = (2 * Math.PI) / prizes.length;
+      const pointerAngle = 1.5 * Math.PI;
+      const targetSegmentAngle = pointerAngle - (selectedPrizeIndex * arcSize + arcSize / 2);
+      
+      const fullSpins = Math.PI * 2 * 6;
+      const currentModulo = currentAngle % (Math.PI * 2);
+      const targetAngle = currentAngle + fullSpins + (targetSegmentAngle - currentModulo);
+
+      const duration = 4500;
+      const startAngle = currentAngle;
+      const start = performance.now();
+
+      function animate(time) {
+        const elapsed = time - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3.5);
+        
+        currentAngle = startAngle + (targetAngle - startAngle) * easeOut;
+        drawWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          document.getElementById("spinBtn").disabled = false;
+          showWinner();
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function showWinner() {
+      document.getElementById("winnerMessage").innerText = prizes[selectedPrizeIndex];
+      document.getElementById("resultModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("resultModal").style.display = "none";
+    }
+
+    function toggleAdmin() {
+      const panel = document.getElementById("adminPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    function savePrizes() {
+      const input = document.getElementById("prizesInput").value;
+      const newPrizes = input.split(',').map(p => p.trim()).filter(p => p.length > 0);
+      if (newPrizes.length >= 2) {
+        prizes = newPrizes;
+        localStorage.setItem('studio_prizes', JSON.stringify(prizes));
+        refillDeck();
+        drawWheel();
+        toggleAdmin();
+        alert("Gewinne erfolgreich aktualisiert!");
+      } else {
+        alert("Bitte mindestens 2 Gewinne eingeben.");
+      }
+    }
+
+    // Erst die PIN-Authentifizierung ausführen, bevor das Spiel geladen wird
+    verifyAccess().then(() => {
+      initPrizes();
+    });
+  </script>
+</body>
+</html>
