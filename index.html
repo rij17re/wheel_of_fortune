@@ -7,38 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-  <style>
-:root{--primary-color:#3b8b8a;--primary-hover:#2d6b6a;--bg-color:#f5f9f8;--card-bg:#fff;--text-color:#384848}
-*{box-sizing:border-box}
-html,body{width:100%;min-height:100%}
-body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;background:var(--bg-color);color:var(--text-color);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;margin:0;padding:clamp(10px,3vw,30px);position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-.top-right-logo{position:absolute;top:clamp(12px,3vw,25px);right:clamp(12px,3vw,30px);width:min(130px,20vw);max-height:85px;height:auto;object-fit:contain;mix-blend-mode:multiply}
-.header-container{width:100%;max-width:900px;text-align:center;margin:clamp(8px,2vh,20px) 0}
-.company-name{font-size:clamp(.85rem,2vw,1.25rem);font-weight:300;letter-spacing:clamp(2px,.8vw,5px);text-transform:uppercase;color:#3b8b8a;margin:0 0 4px;line-height:1.2}
-.company-name span.bold-title{font-weight:700;letter-spacing:clamp(3px,1vw,6px);display:block;font-size:clamp(1rem,2.5vw,1.4rem);color:#2b6c6b;margin-top:2px}
-.subtitle-prefix{font-size:clamp(.65rem,1.5vw,.85rem);letter-spacing:clamp(1px,.5vw,3px);text-transform:uppercase;color:#7a9e9d;font-weight:600;margin-bottom:6px;display:block}
-h1{margin:clamp(6px,1.5vh,12px) 0 6px;color:var(--primary-color);font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.2}
-p.subtitle{margin:0;font-size:clamp(.75rem,2vw,1rem);color:#556665}
-.wheel-outer-wrapper{position:relative;display:flex;justify-content:center;align-items:center;width:100%;max-width:900px;margin:clamp(8px,2vh,20px) 0}
-canvas{display:block;width:min(90vw,650px);height:min(90vw,650px);max-width:100%;max-height:68vh;max-height:68dvh;border-radius:50%;box-shadow:0 10px 25px rgba(59,139,138,.15)}
-.pointer{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:clamp(12px,2vw,18px) solid transparent;border-right:clamp(12px,2vw,18px) solid transparent;border-top:clamp(22px,3vw,30px) solid #d9534f;z-index:10;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2))}
-.spin-btn{margin-top:clamp(8px,2vh,15px);padding:clamp(12px,2vh,16px) clamp(28px,5vw,48px);font-size:clamp(.9rem,2vw,1.15rem);font-weight:600;letter-spacing:1px;background:var(--primary-color);color:#fff;border:0;border-radius:50px;cursor:pointer;box-shadow:0 4px 15px rgba(59,139,138,.4);touch-action:manipulation}
-.spin-btn:hover{background:var(--primary-hover);transform:translateY(-2px)}
-.spin-btn:disabled{background:#ccc;box-shadow:none;cursor:not-allowed;transform:none}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);justify-content:center;align-items:center;padding:20px;z-index:100}
-.modal-content{background:var(--card-bg);padding:clamp(20px,5vw,35px);border-radius:20px;text-align:center;width:min(400px,100%);max-height:90vh;max-height:90dvh;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-.modal-content h2{color:var(--primary-color);margin-top:0;font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.3rem,4vw,1.8rem)}
-.winner-text{font-size:clamp(1.1rem,3vw,1.4rem);font-weight:bold;margin:20px 0;color:#333;white-space:pre-line}
-.btn-close{padding:12px 30px;background:#384848;color:#fff;border:0;border-radius:8px;font-size:1rem;cursor:pointer}
-.admin-toggle{position:fixed;bottom:15px;right:15px;background:none;border:0;font-size:1.2rem;opacity:.4;cursor:pointer}
-.admin-panel{display:none;position:fixed;bottom:60px;right:clamp(10px,3vw,15px);background:#fff;padding:20px;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,.2);width:min(280px,calc(100vw - 20px));max-height:calc(100dvh - 80px);overflow-y:auto;z-index:90}
-.admin-panel h3{margin-top:0;font-size:1.1rem;color:#333}
-.admin-panel textarea{width:100%;height:80px;margin-bottom:10px;border:1px solid #ccc;border-radius:6px;padding:6px;font-family:inherit;resize:vertical}
-.admin-panel button{width:100%;padding:8px;background:var(--primary-color);color:#fff;border:0;border-radius:6px;cursor:pointer}
-@media(max-width:600px){body{justify-content:flex-start;padding-top:15px}.top-right-logo{position:relative;top:auto;right:auto;width:min(120px,30vw);margin-bottom:8px}.header-container{margin-top:0}canvas{width:min(92vw,500px);height:min(92vw,500px)}.spin-btn{margin-bottom:15px}}
-@media(max-width:380px){body{padding:10px}h1{font-size:1.35rem}p.subtitle{font-size:.7rem}canvas{width:min(94vw,360px);height:min(94vw,360px)}}
-@media(max-height:600px) and (orientation:landscape){body{justify-content:flex-start;padding-top:10px}.top-right-logo{position:absolute;top:10px;right:15px}.header-container{margin:0 0 5px}h1{font-size:1.4rem;margin:4px 0}p.subtitle{font-size:.75rem}.wheel-outer-wrapper{margin:5px 0}canvas{width:min(65vh,500px);height:min(65vh,500px)}.spin-btn{margin-top:5px;padding:10px 30px}}
-</style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -59,226 +28,45 @@ canvas{display:block;width:min(90vw,650px);height:min(90vw,650px);max-width:100%
     <canvas id="wheel"></canvas>
   </div>
 
-  <button id="spinBtn" class="spin-btn" onclick="spin()">Jetzt Drehen!</button>
+  <button id="spinBtn" class="spin-btn">Jetzt Drehen!</button>
 
   <!-- Gewinn Modal -->
   <div id="resultModal" class="modal">
     <div class="modal-content">
       <h2>Herzlichen Glückwunsch! 🎉</h2>
       <div id="winnerMessage" class="winner-text"></div>
-      <button class="btn-close" onclick="closeModal()">Super!</button>
+      <button id="closeModalBtn" class="btn-close">Super!</button>
     </div>
   </div>
 
   <!-- Einstellungen / Admin -->
-  <button class="admin-toggle" onclick="toggleAdmin()" title="Gewinne bearbeiten">⚙️</button>
+  <button id="adminToggleBtn" class="admin-toggle" title="Gewinne bearbeiten">⚙️</button>
   <div id="adminPanel" class="admin-panel">
-    <h3>Gewinne anpassen</h3>
-    <p style="font-size:0.8rem; color:#666; margin-top:-5px;">Trenne mehrere Preise mit Komma:</p>
+    <h3>Verwaltung & Bestand</h3>
+    
+    <!-- Logbuch -->
+    <div class="admin-section-title">📋 Gewonnene Preise Log</div>
+    <div id="winnerLogList" class="log-container"></div>
+    <div class="admin-btn-group">
+      <button id="exportCsvBtn" class="btn-sub">💾 CSV</button>
+      <button id="resetBtn" class="btn-sub btn-danger">🗑️ Reset</button>
+    </div>
+
+    <hr>
+
+    <!-- Bestand -->
+    <div class="admin-section-title">📦 Verfügbarer Bestand</div>
+    <div id="inventoryList" class="inventory-container"></div>
+
+    <hr>
+
+    <!-- Gewinne anpassen -->
+    <div class="admin-section-title">⚙️ Gewinne anpassen</div>
+    <p class="help-text">Format: <em>Name : Stückzahl</em> (kommagetrennt)</p>
     <textarea id="prizesInput"></textarea>
-    <button onclick="savePrizes()">Speichern & Neu starten</button>
+    <button id="savePrizesBtn">Speichern & Neu starten</button>
   </div>
 
-  <script>
-    // SHA-256 Hash der PIN "1515"
-    const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
-
-    async function sha256(str) {
-      const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    async function verifyAccess() {
-      const inputPin = prompt("Bitte PIN eingeben, um das Glücksrad zu starten:");
-      if (!inputPin) {
-        denyAccess();
-        return;
-      }
-      
-      const hashedInput = await sha256(inputPin);
-      if (hashedInput !== PAGE_PIN_HASH) {
-        alert("Falsche PIN!");
-        denyAccess();
-      }
-    }
-
-    function denyAccess() {
-      document.body.innerHTML = "<div style='text-align:center; padding: 50px;'><h2>Zugriff verweigert</h2><p>Bitte Seite neu laden und richtige PIN eingeben.</p></div>";
-      throw new Error("Zugriff verweigert");
-    }
-
-    let defaultPrizes = [
-      "10% Rabatt",
-      "Gratis Probe",
-      "Gutschein 15€",
-      "Handcreme",
-      "Gratis Maske",
-      "Trostpreis"
-    ];
-
-    let prizes = [];
-    let prizeDeck = [];
-
-    // Farben angepasst an Marken-Design
-    const colors = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
-    const textColors = ["#ffffff", "#224443", "#ffffff", "#384848", "#ffffff", "#224443"];
-
-    const canvas = document.getElementById("wheel");
-    const ctx = canvas.getContext("2d");
-
-    // HDPI Canvas-Skalierung für gestochen scharfe Darstellung (Retina / High-DPI Displays)
-    let baseSize = 360;
-    let radius = baseSize / 2;
-
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      baseSize = Math.min(rect.width, rect.height);
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = Math.round(baseSize * dpr);
-      canvas.height = Math.round(baseSize * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      radius = baseSize / 2;
-      drawWheel();
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    window.addEventListener('orientationchange', resizeCanvas);
-    let currentAngle = 0;
-    let isSpinning = false;
-    let selectedPrizeIndex = 0;
-
-    function initPrizes() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlPrizes = urlParams.get('prizes');
-
-      if (urlPrizes) {
-        prizes = urlPrizes.split(',').map(p => decodeURIComponent(p.trim())).filter(p => p.length > 0);
-      } else {
-        const storedPrizes = localStorage.getItem('studio_prizes');
-        if (storedPrizes) {
-          prizes = JSON.parse(storedPrizes);
-        } else {
-          prizes = [...defaultPrizes];
-        }
-      }
-
-      document.getElementById('prizesInput').value = prizes.join(', ');
-      refillDeck();
-      drawWheel();
-    }
-
-    function refillDeck() {
-      prizeDeck = [...prizes];
-      prizeDeck.sort(() => Math.random() - 0.5);
-    }
-
-    function drawWheel() {
-      const arcSize = (2 * Math.PI) / prizes.length;
-      ctx.clearRect(0, 0, baseSize, baseSize);
-
-      for (let i = 0; i < prizes.length; i++) {
-        const angle = currentAngle + i * arcSize;
-        ctx.beginPath();
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.moveTo(radius, radius);
-        ctx.arc(radius, radius, radius, angle, angle + arcSize);
-        ctx.lineTo(radius, radius);
-        ctx.fill();
-        ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(angle + arcSize / 2);
-        ctx.textAlign = "right";
-        ctx.fillStyle = textColors[i % textColors.length];
-        // Knackig scharfe Schrift auf dem Canvas mit Montserrat Font
-        const fontSize = Math.max(9, Math.min(18, baseSize * 0.04));
-        ctx.font = `600 ${fontSize}px 'Montserrat', sans-serif`;
-        ctx.fillText(prizes[i], radius - baseSize * 0.055, 5);
-        ctx.restore();
-      }
-    }
-
-    function spin() {
-      if (isSpinning) return;
-
-      if (prizeDeck.length === 0) {
-        refillDeck();
-      }
-
-      const winningPrize = prizeDeck.pop();
-      selectedPrizeIndex = prizes.indexOf(winningPrize);
-
-      isSpinning = true;
-      document.getElementById("spinBtn").disabled = true;
-
-      const arcSize = (2 * Math.PI) / prizes.length;
-      const pointerAngle = 1.5 * Math.PI;
-      const targetSegmentAngle = pointerAngle - (selectedPrizeIndex * arcSize + arcSize / 2);
-      
-      const fullSpins = Math.PI * 2 * 6;
-      const currentModulo = currentAngle % (Math.PI * 2);
-      const targetAngle = currentAngle + fullSpins + (targetSegmentAngle - currentModulo);
-
-      const duration = 4500;
-      const startAngle = currentAngle;
-      const start = performance.now();
-
-      function animate(time) {
-        const elapsed = time - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3.5);
-        
-        currentAngle = startAngle + (targetAngle - startAngle) * easeOut;
-        drawWheel();
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          isSpinning = false;
-          document.getElementById("spinBtn").disabled = false;
-          showWinner();
-        }
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    function showWinner() {
-      document.getElementById("winnerMessage").innerText = prizes[selectedPrizeIndex];
-      document.getElementById("resultModal").style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("resultModal").style.display = "none";
-    }
-
-    function toggleAdmin() {
-      const panel = document.getElementById("adminPanel");
-      panel.style.display = panel.style.display === "block" ? "none" : "block";
-    }
-
-    function savePrizes() {
-      const input = document.getElementById("prizesInput").value;
-      const newPrizes = input.split(',').map(p => p.trim()).filter(p => p.length > 0);
-      if (newPrizes.length >= 2) {
-        prizes = newPrizes;
-        localStorage.setItem('studio_prizes', JSON.stringify(prizes));
-        refillDeck();
-        drawWheel();
-        toggleAdmin();
-        alert("Gewinne erfolgreich aktualisiert!");
-      } else {
-        alert("Bitte mindestens 2 Gewinne eingeben.");
-      }
-    }
-
-    verifyAccess().then(() => {
-      initPrizes();
-      resizeCanvas();
-    });
-  </script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
