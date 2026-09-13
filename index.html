@@ -39,32 +39,33 @@
     </div>
   </div>
 
-  <!-- Einstellungen / Admin -->
+<!-- Einstellungen / Admin -->
   <button id="adminToggleBtn" class="admin-toggle" title="Gewinne bearbeiten">⚙️</button>
   <div id="adminPanel" class="admin-panel">
-    <h3>Verwaltung & Bestand</h3>
+    <h3>Admin-Bereich</h3>
     
-    <!-- Logbuch -->
-    <div class="admin-section-title">📋 Gewonnene Preise Log</div>
+    <div class="section-title">📋 Gewonnene Preise Log</div>
     <div id="winnerLogList" class="log-container"></div>
-    <div class="admin-btn-group">
-      <button id="exportCsvBtn" class="btn-sub">💾 CSV</button>
-      <button id="resetBtn" class="btn-sub btn-danger">🗑️ Reset</button>
+    
+    <div class="button-group">
+      <button id="exportCsvBtn" class="btn-secondary">💾 CSV Export</button>
+      <button id="resetBtn" class="btn-danger">🗑️ Reset</button>
     </div>
 
-    <hr>
+    <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;" />
 
-    <!-- Bestand -->
-    <div class="admin-section-title">📦 Verfügbarer Bestand</div>
+    <div class="section-title">📦 Verfügbare Gewinne</div>
     <div id="inventoryList" class="inventory-container"></div>
 
-    <hr>
+    <!-- Toggle-Button zum Ein-/Ausblenden des Bearbeitungsbereichs -->
+    <button id="toggleEditBtn" style="display: none;" class="btn-secondary" style="width: 100%; margin-bottom: 8px;">✏️ Gewinne bearbeiten</button>
 
-    <!-- Gewinne anpassen -->
-    <div class="admin-section-title">⚙️ Gewinne anpassen</div>
-    <p class="help-text">Format: <em>Name : Stückzahl</em> (kommagetrennt)</p>
-    <textarea id="prizesInput"></textarea>
-    <button id="savePrizesBtn">Speichern & Neu starten</button>
+    <!-- Dieser Bereich ist standardmäßig versteckt -->
+    <div id="editPrizesContainer" style="display: none;">
+      <p style="font-size:0.8rem; color:#666; margin-top:0;">Format: <em>Name : Stückzahl</em> (kommagetrennt)</p>
+      <textarea id="prizesInput"></textarea>
+      <button id="savePrizesBtn" class="btn-primary">Speichern & Neu starten</button>
+    </div>
   </div>
 
   <script type="module" src="app.js"></script>
