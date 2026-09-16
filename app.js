@@ -1,7 +1,7 @@
 const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
 
 const DEFAULT_PRIZES = [
-  { id: 1, name: "15% Jubiläums-Rabatt", initialCount: 10, count: 10 },
+  { id: 1, name: "15% Jubiläums-Rabatt auf ihren Einkauf", initialCount: 10, count: 10 },
   { id: 2, name: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor, Retinolset, Handcreme
   { id: 3, name: "Vliesmaske", initialCount: 10, count: 10 },
   { id: 4, name: "Hand/ Fußcreme", initialCount: 40, count: 40 }, // Bähr
