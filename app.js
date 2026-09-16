@@ -2,9 +2,9 @@ const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e982
 
 const DEFAULT_PRIZES = [
   { id: 1, name: "15% Jubiläums-Rabatt", initialCount: 10, count: 10 },
-  { id: 2, name: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor
+  { id: 2, name: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor, Retinolset, Handcreme
   { id: 3, name: "Vliesmaske", initialCount: 10, count: 10 },
-  { id: 4, name: "Handcreme", initialCount: 1, count: 1 },
+  { id: 4, name: "Hand/ Fußcreme", initialCount: 40, count: 40 }, // Bähr
   { id: 5, name: "Studio-Accessoires", initialCount: 22, count: 22 }, // 7x Tasche, 10x Schwamm, 5x Stirnband 
   { id: 6, name: "Ampulle", initialCount: 16, count: 16 }
 ];
