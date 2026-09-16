@@ -1,12 +1,13 @@
 const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e98210b018d";
 
+// Standardpreise: 'name' erscheint auf dem Rad, 'fullName' im Gewinn-Modal & Logbuch
 const DEFAULT_PRIZES = [
-  { id: 1, name: "15% Jubiläums-Rabatt auf ihren Produkteinkauf", initialCount: 10, count: 10 },
-  { id: 2, name: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor, Retinolset, Handcreme
-  { id: 3, name: "Vliesmaske", initialCount: 10, count: 10 },
-  { id: 4, name: "Hand/ Fußcreme", initialCount: 40, count: 40 }, // Bähr
-  { id: 5, name: "Studio-Accessoires", initialCount: 22, count: 22 }, // 7x Tasche, 10x Schwamm, 5x Stirnband 
-  { id: 6, name: "Ampulle", initialCount: 16, count: 16 }
+  { id: 1, name: "15% Jubiläums-Rabatt", fullName: "15% Jubiläums-Rabatt auf Ihren Produkteinkauf", initialCount: 10, count: 10 },
+  { id: 2, name: "Hauptgewinn", fullName: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor, Retinolset, Handcreme
+  { id: 3, name: "Vliesmaske", fullName: "Vliesmaske", initialCount: 10, count: 10 }, 
+  { id: 4, name: "Hand/ Fußcreme", fullName: "Verwöhnende Hand-/Fußcreme", initialCount: 40, count: 40 },
+  { id: 5, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 22 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
+  { id: 6, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 16 }
 ];
 
 const COLORS = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
@@ -62,11 +63,15 @@ class PrizeManager {
   }
 
   updatePrizesFromInput(inputText) {
+    // Format: Kurztitel | Langtitel : Stückzahl (z.B. "15% Rabatt | 15% Rabatt auf alles : 10")
     const items = inputText.split(',').map((item, index) => {
       const parts = item.split(':');
-      const name = parts[0]?.trim() || '';
+      const names = (parts[0] || '').split('|');
+      const shortName = names[0]?.trim() || '';
+      const fullName = names[1]?.trim() || shortName;
       const count = parseInt(parts[1]?.trim(), 10) || 10;
-      return { id: index + 1, name, initialCount: count, count };
+      
+      return { id: index + 1, name: shortName, fullName: fullName, initialCount: count, count };
     }).filter(p => p.name.length > 0);
 
     if (items.length >= 2) {
@@ -100,6 +105,7 @@ class WheelEngine {
   }
 }
 
+// Globale Variablen & Zustand
 let prizeManager;
 let wheelEngine;
 let winnerLog = [];
@@ -139,7 +145,8 @@ function denyAccess() {
 function resizeCanvas() {
   if (!canvas || !ctx) return;
   const rect = canvas.getBoundingClientRect();
-  baseSize = Math.min(rect.width, rect.height) || 360;
+  baseSize = Math.max(Math.min(rect.width, rect.height), 280); 
+  
   const dpr = window.devicePixelRatio || 1;
   canvas.width = Math.round(baseSize * dpr);
   canvas.height = Math.round(baseSize * dpr);
@@ -171,12 +178,16 @@ function drawWheel() {
     ctx.save();
     ctx.translate(radius, radius);
     ctx.rotate(angle + arcSize / 2);
-    ctx.textAlign = "right";
+    ctx.textAlign = "center";
     ctx.fillStyle = TEXT_COLORS[i % TEXT_COLORS.length];
     
-    const fontSize = Math.max(9, Math.min(18, baseSize * 0.04));
+    const fontSize = Math.max(10, Math.min(16, baseSize * 0.038));
     ctx.font = `600 ${fontSize}px 'Montserrat', sans-serif`;
-    ctx.fillText(prizes[i].name, radius - baseSize * 0.055, 5);
+
+    // Zeigt nur den kurzen Namen mittig im äußeren Drittel des Segments
+    const textRadius = radius * 0.65;
+    ctx.fillText(prizes[i].name, textRadius, 4);
+
     ctx.restore();
   }
 }
@@ -220,14 +231,15 @@ function spin() {
       isSpinning = false;
       document.getElementById("spinBtn").disabled = false;
 
-      winnerLog.push({ name: winner.name, date: new Date().toLocaleString('de-DE') });
+      const winText = winner.fullName || winner.name;
+      winnerLog.push({ name: winText, date: new Date().toLocaleString('de-DE') });
       try {
         localStorage.setItem('studio_winner_log', JSON.stringify(winnerLog));
       } catch(e) {}
 
       renderInventoryUI();
       renderWinnerLog();
-      showWinner(winner.name);
+      showWinner(winText);
     }
   }
 
@@ -281,7 +293,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const prizesInput = document.getElementById('prizesInput');
   if (prizesInput) {
-    prizesInput.value = prizeManager.prizes.map(p => `${p.name} : ${p.initialCount}`).join(', ');
+    prizesInput.value = prizeManager.prizes.map(p => {
+      return p.fullName ? `${p.name} | ${p.fullName} : ${p.initialCount}` : `${p.name} : ${p.initialCount}`;
+    }).join(', ');
   }
 
   document.getElementById('spinBtn')?.addEventListener('click', spin);
@@ -292,6 +306,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const adminPanel = document.getElementById("adminPanel");
   document.getElementById('adminToggleBtn')?.addEventListener('click', () => {
     adminPanel.style.display = adminPanel.style.display === "block" ? "none" : "block";
+  });
+
+  const toggleEditBtn = document.getElementById('toggleEditBtn');
+  const editPrizesContainer = document.getElementById('editPrizesContainer');
+  toggleEditBtn?.addEventListener('click', () => {
+    const isHidden = editPrizesContainer.style.display === 'none';
+    editPrizesContainer.style.display = isHidden ? 'block' : 'none';
+    toggleEditBtn.textContent = isHidden ? '✖️ Bearbeiten schliessen' : '✏️ Gewinne bearbeiten';
   });
 
   document.getElementById('savePrizesBtn')?.addEventListener('click', () => {
