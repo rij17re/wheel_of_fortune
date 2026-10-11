@@ -8,8 +8,7 @@ const DEFAULT_PRIZES = [
   { id: 4, name: "Hand-/ Fußcreme", fullName: "Hand-/ Fußcreme", initialCount: 40, count: 33 },
   { id: 5, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 17 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
   { id: 6, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 14 },
-  { id: 7, name: "Celluar Creme Set", fullName: "Celluar Creme Set", initialCount: 5, count: 5 },
-  { id: 8, name: "Peeling", fullName: "Peeling", initialCount: 5, count: 5 }
+  { id: 7, name: "Celluar Creme Set", fullName: "Celluar Creme-Set", initialCount: 5, count: 5 }
 ];
 
 const COLORS = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
