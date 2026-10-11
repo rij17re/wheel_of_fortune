@@ -2,12 +2,14 @@ const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e982
 
 // Standardpreise: 'name' erscheint auf dem Rad, 'fullName' im Gewinn-Modal & Logbuch
 const DEFAULT_PRIZES = [
-  { id: 1, name: "15% Jubiläums-Rabatt", fullName: "15% Jubiläums-Rabatt auf Ihren Produkteinkauf", initialCount: 10, count: 10 },
-  { id: 2, name: "Hauptgewinn", fullName: "Hauptgewinn", initialCount: 3, count: 3 }, // Celltresor, Retinolset, Handcreme
-  { id: 3, name: "Vliesmaske", fullName: "Vliesmaske", initialCount: 10, count: 10 }, 
-  { id: 4, name: "Hand-/ Fußcreme", fullName: "Hand-/ Fußcreme", initialCount: 40, count: 40 },
-  { id: 5, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 22 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
-  { id: 6, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 16 }
+  { id: 1, name: "15% Jubiläums-Rabatt", fullName: "15% Jubiläums-Rabatt auf Ihren Produkteinkauf", initialCount: 10, count: 9 },
+  { id: 2, name: "Hauptgewinn", fullName: "Hauptgewinn", initialCount: 3, count: 2 }, // Celltresor, Retinolset, Handcreme
+  { id: 3, name: "Vliesmaske", fullName: "Vliesmaske", initialCount: 10, count: 9 }, 
+  { id: 4, name: "Hand-/ Fußcreme", fullName: "Hand-/ Fußcreme", initialCount: 40, count: 33 },
+  { id: 5, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 17 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
+  { id: 6, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 14 },
+  { id: 7, name: "Celluar Creme Set", fullName: "Celluar Creme Set", initialCount: 5, count: 5 },
+  { id: 8, name: "Peeling", fullName: "Peeling", initialCount: 5, count: 5 }
 ];
 
 const COLORS = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
