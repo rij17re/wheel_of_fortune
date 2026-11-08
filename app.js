@@ -4,11 +4,12 @@ const PAGE_PIN_HASH = "f1ee529ef49111208f1c1646c53c8c311c9f093fd7891c1b46d77e982
 const DEFAULT_PRIZES = [
   { id: 1, name: "15% Jubiläums-Rabatt", fullName: "15% Jubiläums-Rabatt auf Ihren Produkteinkauf", initialCount: 10, count: 5 },
   { id: 2, name: "Hauptgewinn", fullName: "Hauptgewinn", initialCount: 3, count: 1 }, // Celltresor, Retinolset, Handcreme
-  { id: 3, name: "Hand-/ Fußcreme", fullName: "Hand-/ Fußcreme", initialCount: 40, count: 19 },
-  { id: 4, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 6 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
-  { id: 5, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 7 },
-  { id: 6, name: "Celluar Creme-Set", fullName: "Celluar Creme-Set", initialCount: 8, count: 5 },
-  { id: 7, name: "Peeling", fullName: "Peeling", initialCount: 5, count: 2 }
+  { id: 3, name: "Vliesmaske", fullName: "Vliesmaske", initialCount: 10, count: 0 },
+  { id: 4, name: "Hand-/ Fußcreme", fullName: "Hand-/ Fußcreme", initialCount: 40, count: 19 },
+  { id: 5, name: "Studio-Accessoires", fullName: "Studio-Accessoires", initialCount: 22, count: 6 }, // 7x Tasche, 10x Schwamm, 5x Strirnband
+  { id: 6, name: "Ampulle", fullName: "Ampulle", initialCount: 16, count: 7 },
+  { id: 7, name: "Celluar Creme-Set", fullName: "Celluar Creme-Set", initialCount: 8, count: 5 },
+  { id: 8, name: "Peeling", fullName: "Peeling", initialCount: 5, count: 2 }
 ];
 
 const COLORS = ["#3b8b8a", "#e8f3f2", "#87bdba", "#f7f5ee", "#5bb3b1", "#d9e8e6"];
